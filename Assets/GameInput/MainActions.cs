@@ -1,4 +1,4 @@
-// GENERATED AUTOMATICALLY FROM 'Assets/Input/MainActions.inputactions'
+// GENERATED AUTOMATICALLY FROM 'Assets/GameInput/MainActions.inputactions'
 
 using System;
 using System.Collections;
@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace RobotJourney.Input
+namespace GameInput
 {
     public class @MainActions : IInputActionCollection, IDisposable
     {
@@ -29,10 +29,10 @@ namespace RobotJourney.Input
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Test"",
-                    ""type"": ""Button"",
-                    ""id"": ""584b167a-f0e3-4168-854f-86d9fbfc21fa"",
-                    ""expectedControlType"": ""Button"",
+                    ""name"": ""Walk"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""49f23f89-e00e-43d1-abcf-3d3d8c87a18e"",
+                    ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
                 }
@@ -50,15 +50,59 @@ namespace RobotJourney.Input
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""37f4d613-1bd2-4dbd-a3a5-1cafd92c92ab"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""name"": ""2D Vector"",
+                    ""id"": ""5785ab84-776b-497d-a7df-ae24855fff2c"",
+                    ""path"": ""2DVector"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Test"",
-                    ""isComposite"": false,
+                    ""action"": ""Walk"",
+                    ""isComposite"": true,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""89c20a58-c915-4184-8bc0-365237bf8c77"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""e57736d3-23f9-4ac8-b7ca-01f724976760"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a9bb8f07-441e-4b42-806c-20e17d61a054"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""4d3e708d-480b-49f3-97cb-327518583ab4"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Walk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -68,7 +112,7 @@ namespace RobotJourney.Input
             // Game
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
             m_Game_TurnPlatforms = m_Game.FindAction("TurnPlatforms", throwIfNotFound: true);
-            m_Game_Test = m_Game.FindAction("Test", throwIfNotFound: true);
+            m_Game_Walk = m_Game.FindAction("Walk", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -119,13 +163,13 @@ namespace RobotJourney.Input
         private readonly InputActionMap m_Game;
         private IGameActions m_GameActionsCallbackInterface;
         private readonly InputAction m_Game_TurnPlatforms;
-        private readonly InputAction m_Game_Test;
+        private readonly InputAction m_Game_Walk;
         public struct GameActions
         {
             private @MainActions m_Wrapper;
             public GameActions(@MainActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @TurnPlatforms => m_Wrapper.m_Game_TurnPlatforms;
-            public InputAction @Test => m_Wrapper.m_Game_Test;
+            public InputAction @Walk => m_Wrapper.m_Game_Walk;
             public InputActionMap Get() { return m_Wrapper.m_Game; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -138,9 +182,9 @@ namespace RobotJourney.Input
                     @TurnPlatforms.started -= m_Wrapper.m_GameActionsCallbackInterface.OnTurnPlatforms;
                     @TurnPlatforms.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnTurnPlatforms;
                     @TurnPlatforms.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnTurnPlatforms;
-                    @Test.started -= m_Wrapper.m_GameActionsCallbackInterface.OnTest;
-                    @Test.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnTest;
-                    @Test.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnTest;
+                    @Walk.started -= m_Wrapper.m_GameActionsCallbackInterface.OnWalk;
+                    @Walk.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnWalk;
+                    @Walk.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnWalk;
                 }
                 m_Wrapper.m_GameActionsCallbackInterface = instance;
                 if (instance != null)
@@ -148,9 +192,9 @@ namespace RobotJourney.Input
                     @TurnPlatforms.started += instance.OnTurnPlatforms;
                     @TurnPlatforms.performed += instance.OnTurnPlatforms;
                     @TurnPlatforms.canceled += instance.OnTurnPlatforms;
-                    @Test.started += instance.OnTest;
-                    @Test.performed += instance.OnTest;
-                    @Test.canceled += instance.OnTest;
+                    @Walk.started += instance.OnWalk;
+                    @Walk.performed += instance.OnWalk;
+                    @Walk.canceled += instance.OnWalk;
                 }
             }
         }
@@ -158,7 +202,7 @@ namespace RobotJourney.Input
         public interface IGameActions
         {
             void OnTurnPlatforms(InputAction.CallbackContext context);
-            void OnTest(InputAction.CallbackContext context);
+            void OnWalk(InputAction.CallbackContext context);
         }
     }
 }
