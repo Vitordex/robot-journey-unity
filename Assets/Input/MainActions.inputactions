@@ -1,0 +1,52 @@
+{
+    "name": "MainActions",
+    "maps": [
+        {
+            "name": "Game",
+            "id": "762db8d5-95ec-4d36-a448-ea42f94cade9",
+            "actions": [
+                {
+                    "name": "TurnPlatforms",
+                    "type": "Button",
+                    "id": "573ee60a-abfe-4974-aab8-68092db27b42",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Test",
+                    "type": "Button",
+                    "id": "584b167a-f0e3-4168-854f-86d9fbfc21fa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "101396fd-f47d-4c01-8c31-84e5edcce87b",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "TurnPlatforms",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37f4d613-1bd2-4dbd-a3a5-1cafd92c92ab",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Test",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
