@@ -1,19 +1,21 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace RobotJourney.Input
+namespace GameInput
 {
     public class GameInputHandler : MonoBehaviour
     {
         private MainActions _actions;
 
         public UnityEvent turnPlatformsHandler;
+        public Vector2Event walkHandler;
 
         private void Awake()
         {
             _actions = new MainActions();
 
             _actions.Game.TurnPlatforms.performed += (context) => turnPlatformsHandler.Invoke();
+            _actions.Game.Walk.performed += (context) => walkHandler.Invoke(context.ReadValue<Vector2>());
         }
 
         private void OnEnable()
@@ -26,4 +28,7 @@ namespace RobotJourney.Input
             _actions.Game.Disable();
         }
     }
+    
+    [System.Serializable]
+    public class Vector2Event : UnityEvent<Vector2> {}
 }
