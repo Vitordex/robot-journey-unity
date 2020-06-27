@@ -7,36 +7,23 @@ namespace Player
     public class MovementHandler : MonoBehaviour
     {
         private Rigidbody _physicsBody;
-        private Transform _cacheTransform;
 
         public float speed = 2f;
 
-        private Vector2 _lastMovementInput;
+        private Vector3 _lastMovementInput;
         private Vector3 _currentVelocity;
-        private Vector3 _currentRotation;
 
         private void Awake()
         {
             _physicsBody = GetComponent<Rigidbody>();
-            _cacheTransform = transform;
         }
 
         public void Walk(Vector2 direction)
         {
-            _lastMovementInput = direction;
+            direction.Normalize();
+            _lastMovementInput = new Vector3(direction.x, 0f, direction.y);
 
             UpdateVelocity();
-
-            var rotateVector = new Vector3(0f, direction.x * Time.deltaTime * speed, 0f);
-            _currentRotation = rotateVector;
-        }
-
-        private void Update()
-        {
-            _cacheTransform.Rotate(_currentRotation);
-
-            if (_currentRotation.sqrMagnitude > 0f)
-                UpdateVelocity();
         }
 
         private void FixedUpdate()
@@ -50,8 +37,7 @@ namespace Player
 
         private void UpdateVelocity()
         {
-            var moveAmount = _lastMovementInput.y * speed * Time.deltaTime;
-            _currentVelocity = _cacheTransform.forward * moveAmount;
+            _currentVelocity = _lastMovementInput * (speed * Time.deltaTime);
         }
     }
 }
