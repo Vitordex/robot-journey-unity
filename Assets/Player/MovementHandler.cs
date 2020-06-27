@@ -32,7 +32,7 @@ namespace Player
                                     float.Epsilon;
             if (differentVelocity) return;
 
-            _physicsBody.velocity = _currentVelocity;
+            _physicsBody.velocity = new Vector3(_currentVelocity.x, _physicsBody.velocity.y, _currentVelocity.z);
         }
 
         private void UpdateVelocity()
