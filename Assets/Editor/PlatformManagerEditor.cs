@@ -75,7 +75,7 @@ public class PlatformManagerEditor : Editor
     private bool ShouldShowSecondHalfDropDown(int firstIndex)
     {
         var firstOption = _options[firstIndex];
-        return !firstOption.Contains("Road") && !firstOption.Contains("MoveNoRotate");
+        return !firstOption.Contains("Road") && !firstOption.Contains("Move");
     }
 
     private void UpdateBottomOptions(string firstOption)
@@ -93,10 +93,6 @@ public class PlatformManagerEditor : Editor
         else if(options.Contains("Wall"))
             options = _options
                 .Where((option) => ValidateConditions(option, "Glass"))
-                .ToArray();
-        else if(options.Contains("MoveHalf"))
-            options = _options
-                .Where((option) => ValidateConditions(option, "MoveShock"))
                 .ToArray();
         
         _bottomOptions = options;
