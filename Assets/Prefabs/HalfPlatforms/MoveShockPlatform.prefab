@@ -99,6 +99,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2748627279529106316}
   - component: {fileID: 2748627279529106315}
+  - component: {fileID: 8345721777691918370}
   m_Layer: 0
   m_Name: MoveShockPlatform
   m_TagString: Untagged
@@ -135,6 +136,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4544c59383e362498c9b75fb388cc2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8345721777691918370
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2748627279529106317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03ab4cba407d5e343abd1fb46ade9f41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveDirection: {x: 0, y: 0, z: 1}
+  moveSpeed: 5
+  gridMoveAmount: 2
 --- !u!1001 &303795183469403738
 PrefabInstance:
   m_ObjectHideFlags: 0
