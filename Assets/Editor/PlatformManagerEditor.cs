@@ -57,6 +57,8 @@ public class PlatformManagerEditor : Editor
             }
 
             platformManager.canTurn = _canPlatformTurn;
+            
+            EditorUtility.SetDirty(target);
         }
     }
 
@@ -68,6 +70,7 @@ public class PlatformManagerEditor : Editor
         if (halfObject == null) return halfObject;
         halfObject.transform.SetParent(platformTransform);
         halfObject.transform.localPosition = Vector3.zero;
+        halfObject.transform.localRotation = Quaternion.identity;
 
         return halfObject;
     }
@@ -75,7 +78,7 @@ public class PlatformManagerEditor : Editor
     private bool ShouldShowSecondHalfDropDown(int firstIndex)
     {
         var firstOption = _options[firstIndex];
-        return !firstOption.Contains("Road") && !firstOption.Contains("MoveNoRotate");
+        return !firstOption.Contains("Road") && !firstOption.Contains("Move");
     }
 
     private void UpdateBottomOptions(string firstOption)
@@ -93,10 +96,6 @@ public class PlatformManagerEditor : Editor
         else if(options.Contains("Wall"))
             options = _options
                 .Where((option) => ValidateConditions(option, "Glass"))
-                .ToArray();
-        else if(options.Contains("MoveHalf"))
-            options = _options
-                .Where((option) => ValidateConditions(option, "MoveShock"))
                 .ToArray();
         
         _bottomOptions = options;
