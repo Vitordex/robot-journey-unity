@@ -57,6 +57,8 @@ public class PlatformManagerEditor : Editor
             }
 
             platformManager.canTurn = _canPlatformTurn;
+            
+            EditorUtility.SetDirty(target);
         }
     }
 
@@ -68,6 +70,7 @@ public class PlatformManagerEditor : Editor
         if (halfObject == null) return halfObject;
         halfObject.transform.SetParent(platformTransform);
         halfObject.transform.localPosition = Vector3.zero;
+        halfObject.transform.localRotation = Quaternion.identity;
 
         return halfObject;
     }
