@@ -201,6 +201,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: fixed_shock_half
       objectReference: {fileID: 0}
+    - target: {fileID: 2533591512107929358, guid: 6ac51b1eb74493344b019093ac844e09,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ac51b1eb74493344b019093ac844e09, type: 3}
 --- !u!4 &3225732971517350226 stripped

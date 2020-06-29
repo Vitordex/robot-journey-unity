@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7173237733883545086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.696, y: 0.491, z: -0.005}
+  m_LocalPosition: {x: 0.609, y: 0.491, z: -0.005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 7173237734193522797}
@@ -42,8 +42,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.19527143, y: 0.5937165, z: 1.5968301}
-  m_Center: {x: 0.0030114353, y: 0, z: 0}
+  m_Size: {x: 0.105464496, y: 0.5937165, z: 1.5}
+  m_Center: {x: 0.041892044, y: 0, z: 0}
 --- !u!1 &7173237734193522796
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,8 +119,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.20430577, y: 0.5937165, z: 1.5968301}
-  m_Center: {x: -0.007528603, y: 0, z: 0}
+  m_Size: {x: 0.105464496, y: 0.5937165, z: 1.5}
+  m_Center: {x: 0.041892044, y: 0, z: 0}
 --- !u!1001 &4472306384614308939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -187,6 +187,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: road_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3367929833145616692, guid: bceccfa4eeab96f4b8aa32f8c23748bb,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bceccfa4eeab96f4b8aa32f8c23748bb, type: 3}

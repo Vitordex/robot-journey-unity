@@ -1,4 +1,5 @@
 ﻿using System;
+using Runtime.Player;
 using UnityEngine;
 
 namespace Runtime.Platforms
@@ -31,6 +32,16 @@ namespace Runtime.Platforms
             
             moveDirection *= -1f;
             _origin = _cachedTransform.position;
+        }
+
+        public void AttachPlayer(Collider player)
+        {
+            player.GetComponent<PlayerComponent>().AttachToTransform(_cachedTransform);
+        }
+
+        public void DetachPlayer(Collider player)
+        {
+            player.GetComponent<PlayerComponent>().AttachToTransform(null);
         }
     }
 }

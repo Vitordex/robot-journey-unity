@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: GlassEnergyHalf
       objectReference: {fileID: 0}
+    - target: {fileID: 5520818303786123098, guid: a40b3c1cac077ac4c901148fbaa75963,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     - target: {fileID: 8846964297502526793, guid: a40b3c1cac077ac4c901148fbaa75963,
         type: 3}
       propertyPath: m_LocalPosition.x
