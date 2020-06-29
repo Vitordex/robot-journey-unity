@@ -42,8 +42,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.596748, y: 0.5937165, z: 0.19535398}
-  m_Center: {x: 0.054085433, y: 0, z: 0.014300942}
+  m_Size: {x: 1.596748, y: 0.5937165, z: 0.040073633}
+  m_Center: {x: 0.054085433, y: 0, z: 0.09194112}
 --- !u!1 &2523199622605827761
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,8 +130,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.19527143, y: 0.5937165, z: 1.5968301}
-  m_Center: {x: 0.0030114353, y: 0, z: 0}
+  m_Size: {x: 0.027634263, y: 0.5937165, z: 1.5968301}
+  m_Center: {x: -0.08080715, y: 0, z: 0}
 --- !u!1 &2523199623896695247
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,6 +177,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: road_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1731876219654743273, guid: e5c7648f8862a8b45bc5567ebffd9103,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     - target: {fileID: 3338158972185171706, guid: e5c7648f8862a8b45bc5567ebffd9103,
         type: 3}

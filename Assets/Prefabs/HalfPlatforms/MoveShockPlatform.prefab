@@ -302,6 +302,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: move_shock_half
       objectReference: {fileID: 0}
+    - target: {fileID: 3687894112793426895, guid: 9bf22cc86c05711488c1b908b08c233f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bf22cc86c05711488c1b908b08c233f, type: 3}
 --- !u!4 &90667846093477766 stripped
@@ -321,6 +326,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: move_half
+      objectReference: {fileID: 0}
+    - target: {fileID: 1157059456080214395, guid: b21670d758e492d49a51507667a3d4a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     - target: {fileID: 2762371958170192744, guid: b21670d758e492d49a51507667a3d4a8,
         type: 3}
