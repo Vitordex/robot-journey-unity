@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 9110242571899014559}
   - component: {fileID: 9110242571899014556}
   - component: {fileID: 9110242571899014558}
+  - component: {fileID: 3134501912115480172}
   m_Layer: 0
-  m_Name: PlatformManager
+  m_Name: CompletePlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -61,3 +62,19 @@ MonoBehaviour:
   speed: 10
   tolerance: 0.02
   multiplyFactor: 1
+--- !u!54 &3134501912115480172
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110242571899014557}
+  serializedVersion: 2
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
