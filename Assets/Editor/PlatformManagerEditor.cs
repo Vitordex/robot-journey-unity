@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using Runtime.Platforms;
 using UnityEditor;
+using UnityEditor.Events;
 using UnityEngine;
 
 [CustomEditor(typeof(PlatformManager))]
@@ -23,13 +24,13 @@ public class PlatformManagerEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        base.OnInspectorGUI();
+        
         PopulatePlatformsList();
         
         _firstPopupIndex = EditorGUILayout.Popup("Top Half", _firstPopupIndex, _options);
 
         if (ShouldShowSecondHalfDropDown(_firstPopupIndex)) UpdateBottomOptions(_options[_firstPopupIndex]);
-        
-        _canPlatformTurn = EditorGUILayout.Toggle("Can Turn", _canPlatformTurn);
 
         var generateButton = GUILayout.Button("Generate");
         if (generateButton)
@@ -41,11 +42,22 @@ public class PlatformManagerEditor : Editor
             for (int i = 0; i < platformTransform.childCount; i++)
                 spawnedHalves[i] = platformTransform.GetChild(i).gameObject;
 
-            foreach (var spawnedHalve in spawnedHalves)
+            foreach (var spawnedHalve in spawnedHalves.Where((half) => !half.name.Contains("Blocker")))
                 DestroyImmediate(spawnedHalve);
 
+            for (int i = 0; i < platformManager.turned.GetPersistentEventCount(); i++)
+            {
+                UnityEventTools.RemovePersistentListener(platformManager.turned, i);
+            }
+
             var topAssetPath = _halvesPaths[_firstPopupIndex];
-            InstantiateHalf(topAssetPath, platformTransform);
+            var firstObject = InstantiateHalf(topAssetPath, platformTransform);
+            
+            if (firstObject.name.Contains("Wall"))
+            {
+                var wallPlatform = firstObject.GetComponent<WallPlatform>();
+                UnityEventTools.AddPersistentListener(platformManager.turned, wallPlatform.OnTurned);
+            }
 
             if (ShouldShowSecondHalfDropDown(_firstPopupIndex))
             {
@@ -54,9 +66,13 @@ public class PlatformManagerEditor : Editor
                 var secondObject = InstantiateHalf(bottomAssetPath, platformTransform);
 
                 secondObject.transform.rotation = Quaternion.Euler(180f, 0f, 0f);
-            }
 
-            platformManager.canTurn = _canPlatformTurn;
+                if (secondObject.name.Contains("Wall"))
+                {
+                    var wallPlatform = secondObject.GetComponent<WallPlatform>();
+                    UnityEventTools.AddPersistentListener(platformManager.turned, wallPlatform.OnTurned);
+                }
+            }
             
             EditorUtility.SetDirty(target);
         }
@@ -89,11 +105,11 @@ public class PlatformManagerEditor : Editor
             options = _options
                 .Where((option) => ValidateConditions(option, "Wall", "FixedShock"))
                 .ToArray();
-        else if(options.Contains("FixedShock"))
+        else if(firstOption.Contains("FixedShock"))
             options = _options
                 .Where((option) => ValidateConditions(option, "FixedShock", "Glass"))
                 .ToArray();
-        else if(options.Contains("Wall"))
+        else if(firstOption.Contains("Wall"))
             options = _options
                 .Where((option) => ValidateConditions(option, "Glass"))
                 .ToArray();
