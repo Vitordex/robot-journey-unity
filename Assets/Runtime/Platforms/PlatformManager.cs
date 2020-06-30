@@ -12,6 +12,7 @@ namespace Runtime.Platforms
         public UnityEvent turned;
 
         private IRotator _platformRotator;
+        private bool _isEnergized = false;
 
         private void Awake()
         {
@@ -25,10 +26,15 @@ namespace Runtime.Platforms
 
         private void Turn()
         {
-            if (_platformRotator.IsTurning() || !canTurn) return;
+            if (_platformRotator.IsTurning() || !canTurn || !_isEnergized) return;
 
             _platformRotator.TurnAround();
             turned.Invoke();
+        }
+
+        public void ToggleEnergy()
+        {
+            _isEnergized = !_isEnergized;
         }
     }
 }

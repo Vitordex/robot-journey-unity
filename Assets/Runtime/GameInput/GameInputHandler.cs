@@ -9,6 +9,7 @@ namespace GameInput
 
         public UnityEvent turnPlatformsHandler;
         public Vector2Event walkHandler;
+        public UnityEvent interactHandler;
 
         public static GameInputHandler instance;
 
@@ -20,6 +21,7 @@ namespace GameInput
 
             _actions.Game.TurnPlatforms.performed += (context) => turnPlatformsHandler.Invoke();
             _actions.Game.Walk.performed += (context) => walkHandler.Invoke(context.ReadValue<Vector2>());
+            _actions.Game.Interact.performed += (context) => interactHandler.Invoke();
         }
 
         private void OnEnable()

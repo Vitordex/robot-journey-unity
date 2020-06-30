@@ -35,6 +35,14 @@ namespace GameInput
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""2646c4d0-cf49-4257-bf66-d55fa21c8e6b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -103,6 +111,17 @@ namespace GameInput
                     ""action"": ""Walk"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""43e06af0-7169-4476-a4d1-a4dfb1fe7aa7"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -113,6 +132,7 @@ namespace GameInput
             m_Game = asset.FindActionMap("Game", throwIfNotFound: true);
             m_Game_TurnPlatforms = m_Game.FindAction("TurnPlatforms", throwIfNotFound: true);
             m_Game_Walk = m_Game.FindAction("Walk", throwIfNotFound: true);
+            m_Game_Interact = m_Game.FindAction("Interact", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -164,12 +184,14 @@ namespace GameInput
         private IGameActions m_GameActionsCallbackInterface;
         private readonly InputAction m_Game_TurnPlatforms;
         private readonly InputAction m_Game_Walk;
+        private readonly InputAction m_Game_Interact;
         public struct GameActions
         {
             private @MainActions m_Wrapper;
             public GameActions(@MainActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @TurnPlatforms => m_Wrapper.m_Game_TurnPlatforms;
             public InputAction @Walk => m_Wrapper.m_Game_Walk;
+            public InputAction @Interact => m_Wrapper.m_Game_Interact;
             public InputActionMap Get() { return m_Wrapper.m_Game; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -185,6 +207,9 @@ namespace GameInput
                     @Walk.started -= m_Wrapper.m_GameActionsCallbackInterface.OnWalk;
                     @Walk.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnWalk;
                     @Walk.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnWalk;
+                    @Interact.started -= m_Wrapper.m_GameActionsCallbackInterface.OnInteract;
+                    @Interact.performed -= m_Wrapper.m_GameActionsCallbackInterface.OnInteract;
+                    @Interact.canceled -= m_Wrapper.m_GameActionsCallbackInterface.OnInteract;
                 }
                 m_Wrapper.m_GameActionsCallbackInterface = instance;
                 if (instance != null)
@@ -195,6 +220,9 @@ namespace GameInput
                     @Walk.started += instance.OnWalk;
                     @Walk.performed += instance.OnWalk;
                     @Walk.canceled += instance.OnWalk;
+                    @Interact.started += instance.OnInteract;
+                    @Interact.performed += instance.OnInteract;
+                    @Interact.canceled += instance.OnInteract;
                 }
             }
         }
@@ -203,6 +231,7 @@ namespace GameInput
         {
             void OnTurnPlatforms(InputAction.CallbackContext context);
             void OnWalk(InputAction.CallbackContext context);
+            void OnInteract(InputAction.CallbackContext context);
         }
     }
 }
