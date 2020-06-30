@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Runtime.Interactables;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Runtime.Player
@@ -7,6 +8,7 @@ namespace Runtime.Player
     {
         public UnityEvent killedPlayer;
         private Transform _cachedTransform;
+        private IInteractable _terminal;
 
         private void Awake()
         {
@@ -21,6 +23,16 @@ namespace Runtime.Player
         public void AttachToTransform(Transform parent)
         {
             _cachedTransform.SetParent(parent);
+        }
+
+        public void Interact()
+        {
+            _terminal?.Interact();
+        }
+
+        public void SetActiveTerminal(Collider terminal)
+        {
+            _terminal = terminal.GetComponent<IInteractable>();
         }
     }
 }
