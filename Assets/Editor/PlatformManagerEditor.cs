@@ -16,10 +16,26 @@ public class PlatformManagerEditor : Editor
     private int _firstPopupIndex = 0;
     private int _secondPopupIndex = 0;
     private bool _canPlatformTurn = false;
+    private static Vector3 _gridSize;
+    private static bool _snapInPlayingMode;
+    private static bool _snapX;
+    private static bool _snapY;
+    private static bool _snapZ;
+
+    static PlatformManagerEditor()
+    {
+        _gridSize = new Vector3(1.6f, 1f, 1.6f);
+        _snapX = _snapZ = true;
+    }
 
     private void OnEnable()
     {
         _canPlatformTurn = ((PlatformManager) target).canTurn;
+    }
+
+    private void OnSceneGUI() 
+    {
+        SnapPlatform();
     }
 
     public override void OnInspectorGUI()
@@ -76,6 +92,8 @@ public class PlatformManagerEditor : Editor
             
             EditorUtility.SetDirty(target);
         }
+
+        GridToolInspectorGUI();
     }
 
     private GameObject InstantiateHalf(string assetPath, Transform platformTransform)
@@ -144,5 +162,44 @@ public class PlatformManagerEditor : Editor
             _halvesPaths[i] = path;
             _options[i] = Path.GetFileNameWithoutExtension(path);
         }
+    }
+
+    private void GridToolInspectorGUI()
+    {
+        EditorGUILayout.Space(25);
+        if(Application.isPlaying)
+            _snapInPlayingMode = EditorGUILayout.ToggleLeft("Snap In Playing Mode", _snapInPlayingMode);
+        
+        var isDisable = !_snapInPlayingMode && EditorApplication.isPlaying;
+        EditorGUI.BeginDisabledGroup(isDisable);
+        EditorGUILayout.Space(5);
+        var layout = EditorStyles.boldLabel;
+        EditorGUILayout.LabelField("Grid Config", layout);
+        _gridSize= EditorGUILayout.Vector3Field("Grid Size", _gridSize);
+        
+        EditorGUILayout.Space(5);
+        EditorGUILayout.LabelField("Snap Option", layout);
+        _snapX = EditorGUILayout.ToggleLeft("Snap X", _snapX);
+        _snapY = EditorGUILayout.ToggleLeft("Snap Y", _snapY);
+        _snapZ = EditorGUILayout.ToggleLeft("Snap Z", _snapZ);
+        EditorGUI.EndDisabledGroup();
+    }
+
+    private void SnapPlatform()
+    {
+        if (!_snapInPlayingMode && EditorApplication.isPlaying) return;
+
+        var platformManager = target as PlatformManager;
+        var transform = platformManager.transform;
+        var position = transform.position;
+        
+        if(_snapX)
+            position.x = Mathf.Round(position.x / _gridSize.x) * _gridSize.x;
+        if(_snapY)
+            position.y = Mathf.Round(position.y / _gridSize.y) * _gridSize.y;
+        if(_snapZ)
+            position.z = Mathf.Round(position.z / _gridSize.z) * _gridSize.z;
+
+        transform.position = position;
     }
 }
