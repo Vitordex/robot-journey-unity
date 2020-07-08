@@ -1,5 +1,4 @@
-﻿using System;
-using GameInput;
+﻿using Runtime.GameInput;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,12 +6,11 @@ namespace Runtime.Platforms
 {
     public class PlatformManager : MonoBehaviour
     {
-        public bool canTurn;
-
         public UnityEvent turned;
 
         private IRotator _platformRotator;
-        private bool _isEnergized = false;
+        public bool isEnergized = false;
+        public bool canTurn;
 
         private void Awake()
         {
@@ -26,7 +24,7 @@ namespace Runtime.Platforms
 
         private void Turn()
         {
-            if (_platformRotator.IsTurning() || !canTurn || !_isEnergized) return;
+            if (_platformRotator.IsTurning() || !canTurn || !isEnergized) return;
 
             _platformRotator.TurnAround();
             turned.Invoke();
@@ -34,7 +32,7 @@ namespace Runtime.Platforms
 
         public void ToggleEnergy()
         {
-            _isEnergized = !_isEnergized;
+            isEnergized = !isEnergized;
         }
     }
 }
