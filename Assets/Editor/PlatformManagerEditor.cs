@@ -54,11 +54,20 @@ public class PlatformManagerEditor : Editor
         if (generateButton)
         {
             platformManager = (PlatformManager)target;
-            var platformTransform = platformManager.transform;
+            var platformPivotTransform = platformManager.transform.GetChild(0);
+            if (!platformPivotTransform.name.Contains("Pivot"))
+            {
+                var platformTransform = platformManager.transform;
+                for (int i = 0; i < platformTransform.childCount; i++)
+                {
+                    var child = platformTransform.GetChild(i);
+                    if (child.name.Contains("Pivot")) platformPivotTransform = child;
+                }
+            }
 
-            var spawnedHalves = new GameObject[platformTransform.childCount];
-            for (int i = 0; i < platformTransform.childCount; i++)
-                spawnedHalves[i] = platformTransform.GetChild(i).gameObject;
+            var spawnedHalves = new GameObject[platformPivotTransform.childCount];
+            for (int i = 0; i < platformPivotTransform.childCount; i++)
+                spawnedHalves[i] = platformPivotTransform.GetChild(i).gameObject;
 
             foreach (var spawnedHalve in spawnedHalves.Where((half) => !half.name.Contains("Blocker")))
                 DestroyImmediate(spawnedHalve);
@@ -70,7 +79,7 @@ public class PlatformManagerEditor : Editor
 
             var topAssetPath = _halvesPaths[_firstPopupIndex];
             var platformType = $"{_firstPopupIndex}.";
-            var firstObject = InstantiateHalf(topAssetPath, platformTransform);
+            var firstObject = InstantiateHalf(topAssetPath, platformPivotTransform);
             firstObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             
             if (firstObject.name.Contains("Wall"))
@@ -84,7 +93,7 @@ public class PlatformManagerEditor : Editor
                 var bottomAssetPath = _halvesPaths
                     .First((path) => path.Contains(_bottomOptions[_secondPopupIndex]));
                 platformType += _secondPopupIndex;
-                var secondObject = InstantiateHalf(bottomAssetPath, platformTransform);
+                var secondObject = InstantiateHalf(bottomAssetPath, platformPivotTransform);
 
                 secondObject.transform.rotation = Quaternion.Euler(180f, 0f, 0f);
 
@@ -116,13 +125,13 @@ public class PlatformManagerEditor : Editor
         _typeSet = true;
     }
 
-    private GameObject InstantiateHalf(string assetPath, Transform platformTransform)
+    private GameObject InstantiateHalf(string assetPath, Transform platformPivotTransform)
     {
-        var halfAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(assetPath);
+        var halfAsset = AssetDatabase.LoadAssetAtPath<Object>(assetPath);
         var halfObject = PrefabUtility.InstantiatePrefab(halfAsset) as GameObject;
         
         if (halfObject == null) return halfObject;
-        halfObject.transform.SetParent(platformTransform);
+        halfObject.transform.SetParent(platformPivotTransform);
         halfObject.transform.localPosition = Vector3.zero;
         halfObject.transform.localRotation = Quaternion.identity;
 
