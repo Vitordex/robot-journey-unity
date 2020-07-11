@@ -12,6 +12,8 @@ namespace Runtime.Platforms
         public bool isEnergized = false;
         public bool canTurn;
 
+        [HideInInspector] public string platformType;
+
         private void Awake()
         {
             _platformRotator = GetComponent<IRotator>();
