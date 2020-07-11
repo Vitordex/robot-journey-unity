@@ -68,6 +68,7 @@ public class PlatformManagerEditor : Editor
 
             var topAssetPath = _halvesPaths[_firstPopupIndex];
             var firstObject = InstantiateHalf(topAssetPath, platformTransform);
+            firstObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             
             if (firstObject.name.Contains("Wall"))
             {

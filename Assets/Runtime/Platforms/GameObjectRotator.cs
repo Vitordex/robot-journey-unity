@@ -22,8 +22,8 @@ namespace Runtime.Platforms
         public void TurnAround()
         {
             _isTurning = true;
-            var is180 = Math.Abs(_targetRotation.x - 180f) < float.Epsilon;
-            _targetRotation = new Vector3(is180 ? 360f : 180f, 0f, 0f);
+            var is180 = Math.Abs(_targetRotation.z - 180f) < float.Epsilon;
+            _targetRotation = new Vector3(0f, 0f, is180 ? 360f : 180f);
         }
 
         private void Update()
