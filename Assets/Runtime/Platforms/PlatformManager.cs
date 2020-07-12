@@ -1,5 +1,6 @@
 ﻿using System;
 using GameInput;
+using Runtime.GameInput;
 using UnityEngine;
 using UnityEngine.Events;
 
