@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using GameInput;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Runtime.GameInput
@@ -16,11 +18,10 @@ namespace Runtime.GameInput
         private void Awake()
         {
             instance = this;
-            
+
             _actions = new MainActions();
 
             _actions.Game.TurnPlatforms.performed += (context) => turnPlatformsHandler.Invoke();
-            _actions.Game.Walk.performed += (context) => walkHandler.Invoke(context.ReadValue<Vector2>());
             _actions.Game.Interact.performed += (context) => interactHandler.Invoke();
         }
 
@@ -33,8 +34,22 @@ namespace Runtime.GameInput
         {
             _actions.Game.Disable();
         }
+
+        private void Update()
+        {
+            ValidateWalk();
+        }
+
+        private Vector2 _lastWalkValue;
+
+        private void ValidateWalk()
+        {
+            walkHandler.Invoke(_actions.Game.Walk.ReadValue<Vector2>());
+        }
     }
-    
+
     [System.Serializable]
-    public class Vector2Event : UnityEvent<Vector2> {}
+    public class Vector2Event : UnityEvent<Vector2>
+    {
+    }
 }

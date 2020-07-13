@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: ciapira
     second: {fileID: 2100000, guid: f378cb34cb415334d91a49b2f8de2be2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: vrido
+    second: {fileID: 2100000, guid: f378cb34cb415334d91a49b2f8de2be2, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0

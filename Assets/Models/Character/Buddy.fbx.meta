@@ -9,6 +9,11 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: budy
     second: {fileID: 2100000, guid: e1dd7c79c9f57ea46a7e558e4df5e03e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: telinha
+    second: {fileID: 2100000, guid: e1dd7c79c9f57ea46a7e558e4df5e03e, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
