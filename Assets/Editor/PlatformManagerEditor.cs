@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using Runtime.Platforms;
 using UnityEditor;
@@ -16,10 +14,28 @@ public class PlatformManagerEditor : Editor
     private int _firstPopupIndex = 0;
     private int _secondPopupIndex = 0;
     private bool _canPlatformTurn = false;
+    private static Vector3 _gridSize;
+    private static bool _snapInPlayingMode;
+    private static bool _snapX;
+    private static bool _snapY;
+    private static bool _snapZ;
+
+    private bool _typeSet = false;
+
+    static PlatformManagerEditor()
+    {
+        _gridSize = new Vector3(1.6f, 1f, 1.6f);
+        _snapX = _snapZ = true;
+    }
 
     private void OnEnable()
     {
         _canPlatformTurn = ((PlatformManager) target).canTurn;
+    }
+
+    private void OnSceneGUI() 
+    {
+        SnapPlatform();
     }
 
     public override void OnInspectorGUI()
@@ -27,7 +43,9 @@ public class PlatformManagerEditor : Editor
         base.OnInspectorGUI();
         
         PopulatePlatformsList();
-        
+        var platformManager = (PlatformManager)target;
+        FillIndexes(platformManager);
+
         _firstPopupIndex = EditorGUILayout.Popup("Top Half", _firstPopupIndex, _options);
 
         if (ShouldShowSecondHalfDropDown(_firstPopupIndex)) UpdateBottomOptions(_options[_firstPopupIndex]);
@@ -35,12 +53,21 @@ public class PlatformManagerEditor : Editor
         var generateButton = GUILayout.Button("Generate");
         if (generateButton)
         {
-            var platformManager = (PlatformManager)target;
-            var platformTransform = platformManager.transform;
+            platformManager = (PlatformManager)target;
+            var platformPivotTransform = platformManager.transform.GetChild(0);
+            if (!platformPivotTransform.name.Contains("Pivot"))
+            {
+                var platformTransform = platformManager.transform;
+                for (int i = 0; i < platformTransform.childCount; i++)
+                {
+                    var child = platformTransform.GetChild(i);
+                    if (child.name.Contains("Pivot")) platformPivotTransform = child;
+                }
+            }
 
-            var spawnedHalves = new GameObject[platformTransform.childCount];
-            for (int i = 0; i < platformTransform.childCount; i++)
-                spawnedHalves[i] = platformTransform.GetChild(i).gameObject;
+            var spawnedHalves = new GameObject[platformPivotTransform.childCount];
+            for (int i = 0; i < platformPivotTransform.childCount; i++)
+                spawnedHalves[i] = platformPivotTransform.GetChild(i).gameObject;
 
             foreach (var spawnedHalve in spawnedHalves.Where((half) => !half.name.Contains("Blocker")))
                 DestroyImmediate(spawnedHalve);
@@ -51,7 +78,9 @@ public class PlatformManagerEditor : Editor
             }
 
             var topAssetPath = _halvesPaths[_firstPopupIndex];
-            var firstObject = InstantiateHalf(topAssetPath, platformTransform);
+            var platformType = $"{_firstPopupIndex}.";
+            var firstObject = InstantiateHalf(topAssetPath, platformPivotTransform);
+            firstObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             
             if (firstObject.name.Contains("Wall"))
             {
@@ -63,7 +92,8 @@ public class PlatformManagerEditor : Editor
             {
                 var bottomAssetPath = _halvesPaths
                     .First((path) => path.Contains(_bottomOptions[_secondPopupIndex]));
-                var secondObject = InstantiateHalf(bottomAssetPath, platformTransform);
+                platformType += _secondPopupIndex;
+                var secondObject = InstantiateHalf(bottomAssetPath, platformPivotTransform);
 
                 secondObject.transform.rotation = Quaternion.Euler(180f, 0f, 0f);
 
@@ -73,18 +103,35 @@ public class PlatformManagerEditor : Editor
                     UnityEventTools.AddPersistentListener(platformManager.turned, wallPlatform.OnTurned);
                 }
             }
+
+            platformManager.platformType = platformType;
             
             EditorUtility.SetDirty(target);
         }
+
+        GridToolInspectorGUI();
     }
 
-    private GameObject InstantiateHalf(string assetPath, Transform platformTransform)
+    private void FillIndexes(PlatformManager platformManager)
     {
-        var halfAsset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(assetPath);
+        var platformType = platformManager.platformType;
+        if (string.IsNullOrEmpty(platformType) || _typeSet) return;
+        
+        var divided = platformType.Split('.');
+        _firstPopupIndex = int.Parse(divided[0]);
+        if (!string.IsNullOrEmpty(divided[1]))
+            _secondPopupIndex = int.Parse(divided[1]);
+
+        _typeSet = true;
+    }
+
+    private GameObject InstantiateHalf(string assetPath, Transform platformPivotTransform)
+    {
+        var halfAsset = AssetDatabase.LoadAssetAtPath<Object>(assetPath);
         var halfObject = PrefabUtility.InstantiatePrefab(halfAsset) as GameObject;
         
         if (halfObject == null) return halfObject;
-        halfObject.transform.SetParent(platformTransform);
+        halfObject.transform.SetParent(platformPivotTransform);
         halfObject.transform.localPosition = Vector3.zero;
         halfObject.transform.localRotation = Quaternion.identity;
 
@@ -144,5 +191,44 @@ public class PlatformManagerEditor : Editor
             _halvesPaths[i] = path;
             _options[i] = Path.GetFileNameWithoutExtension(path);
         }
+    }
+
+    private void GridToolInspectorGUI()
+    {
+        EditorGUILayout.Space(25);
+        if(Application.isPlaying)
+            _snapInPlayingMode = EditorGUILayout.ToggleLeft("Snap In Playing Mode", _snapInPlayingMode);
+        
+        var isDisable = !_snapInPlayingMode && EditorApplication.isPlaying;
+        EditorGUI.BeginDisabledGroup(isDisable);
+        EditorGUILayout.Space(5);
+        var layout = EditorStyles.boldLabel;
+        EditorGUILayout.LabelField("Grid Config", layout);
+        _gridSize= EditorGUILayout.Vector3Field("Grid Size", _gridSize);
+        
+        EditorGUILayout.Space(5);
+        EditorGUILayout.LabelField("Snap Option", layout);
+        _snapX = EditorGUILayout.ToggleLeft("Snap X", _snapX);
+        _snapY = EditorGUILayout.ToggleLeft("Snap Y", _snapY);
+        _snapZ = EditorGUILayout.ToggleLeft("Snap Z", _snapZ);
+        EditorGUI.EndDisabledGroup();
+    }
+
+    private void SnapPlatform()
+    {
+        if (!_snapInPlayingMode && EditorApplication.isPlaying) return;
+
+        var platformManager = target as PlatformManager;
+        var transform = platformManager.transform;
+        var position = transform.position;
+        
+        if(_snapX)
+            position.x = Mathf.Round(position.x / _gridSize.x) * _gridSize.x;
+        if(_snapY)
+            position.y = Mathf.Round(position.y / _gridSize.y) * _gridSize.y;
+        if(_snapZ)
+            position.z = Mathf.Round(position.z / _gridSize.z) * _gridSize.z;
+
+        transform.position = position;
     }
 }

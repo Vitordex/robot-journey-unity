@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Utilities;
 
-namespace GameInput
+namespace Runtime.GameInput
 {
     public class @MainActions : IInputActionCollection, IDisposable
     {
