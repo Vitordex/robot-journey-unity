@@ -15,10 +15,16 @@ namespace Runtime.Platforms
         private Transform _parentTransform;
         private readonly float _gridSize = 1.5f;
 
+        private Vector3 _initialPosition;
+        private Vector3 _endPosition;
+        private bool _toDestination = true;
+
         private void Awake()
         {
             _parentTransform = transform.parent.parent;
             _origin = _parentTransform.position;
+            _initialPosition = _parentTransform.position;
+            _endPosition = _initialPosition + moveDirection * _gridSize * gridMoveAmount;
         }
 
         private bool _isInDelay = false;
@@ -45,6 +51,8 @@ namespace Runtime.Platforms
             if (!(distance > _gridSize * gridMoveAmount)) return;
             
             moveDirection *= -1f;
+            _toDestination = !_toDestination;
+            _parentTransform.position = !_toDestination ? _endPosition : _initialPosition;
             _origin = _parentTransform.position;
             _isInDelay = true;
         }
