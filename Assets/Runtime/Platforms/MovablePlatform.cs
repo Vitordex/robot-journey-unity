@@ -13,7 +13,7 @@ namespace Runtime.Platforms
 
         private Vector3 _origin;
         private Transform _parentTransform;
-        private readonly float _gridSize = 1.5f;
+        private readonly float _gridSize = 1.6f;
 
         private Vector3 _initialPosition;
         private Vector3 _endPosition;
