@@ -133,7 +133,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0, z: 1}
-  moveSpeed: 5
+  moveSpeed: 1
   gridMoveAmount: 2
 --- !u!1 &4728767635239184592
 GameObject:

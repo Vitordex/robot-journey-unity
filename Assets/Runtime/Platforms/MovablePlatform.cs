@@ -6,37 +6,34 @@ namespace Runtime.Platforms
 {
     public class MovablePlatform : MonoBehaviour
     {
-        private Rigidbody _parentRigidbody;
-
         public Vector3 moveDirection = Vector3.forward;
         public float moveSpeed = 5;
         public float gridMoveAmount = 2;
 
         private Vector3 _origin;
-        private Transform _cachedTransform;
+        private Transform _parentTransform;
         private readonly float _gridSize = 1.5f;
 
         private void Awake()
         {
-            _parentRigidbody = GetComponentInParent<Rigidbody>();
-            _cachedTransform = transform;
-            _origin = _cachedTransform.position;
+            _parentTransform = transform.parent.parent;
+            _origin = _parentTransform.position;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-            _parentRigidbody.velocity = moveDirection * (moveSpeed * Time.deltaTime);
-
-            var distance = Mathf.Abs(Vector3.Distance(_cachedTransform.position, _origin));
+            _parentTransform.Translate(moveDirection * (moveSpeed * Time.deltaTime));
+            
+            var distance = Mathf.Abs(Vector3.Distance(_parentTransform.position, _origin));
             if (!(distance > _gridSize * gridMoveAmount)) return;
             
             moveDirection *= -1f;
-            _origin = _cachedTransform.position;
+            _origin = _parentTransform.position;
         }
 
         public void AttachPlayer(Collider player)
         {
-            player.GetComponent<PlayerComponent>().AttachToTransform(_cachedTransform);
+            player.GetComponent<PlayerComponent>().AttachToTransform(_parentTransform);
         }
 
         public void DetachPlayer(Collider player)
