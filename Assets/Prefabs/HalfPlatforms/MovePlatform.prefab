@@ -61,6 +61,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 1}
   moveSpeed: 5
   gridMoveAmount: 2
+  waitTime: 1
 --- !u!1 &6725519087818292233
 GameObject:
   m_ObjectHideFlags: 0
