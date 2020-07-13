@@ -61,6 +61,7 @@ MonoBehaviour:
   moveDirection: {x: 0, y: 0, z: 1}
   moveSpeed: 5
   gridMoveAmount: 2
+  waitTime: 1
 --- !u!1 &6725519087818292233
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +228,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: move_no_rotate
+      objectReference: {fileID: 0}
+    - target: {fileID: 7932404914468571794, guid: b2809ec0a9448364f85ddcc971792bc3,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2809ec0a9448364f85ddcc971792bc3, type: 3}
