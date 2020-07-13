@@ -1,6 +1,4 @@
-﻿using System;
-using GameInput;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace Runtime.GameInput

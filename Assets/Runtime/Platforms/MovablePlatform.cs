@@ -9,6 +9,7 @@ namespace Runtime.Platforms
         public Vector3 moveDirection = Vector3.forward;
         public float moveSpeed = 5;
         public float gridMoveAmount = 2;
+        public float waitTime = 1f;
 
         private Vector3 _origin;
         private Transform _parentTransform;
@@ -20,8 +21,24 @@ namespace Runtime.Platforms
             _origin = _parentTransform.position;
         }
 
+        private bool _isInDelay = false;
+        private float _timePassed = 0f;
+        
         private void Update()
         {
+            if (_isInDelay)
+            {
+                _timePassed += Time.deltaTime;
+
+                if (_timePassed >= waitTime)
+                {
+                    _timePassed = 0f;
+                    _isInDelay = false;
+                }
+                
+                return;
+            }
+            
             _parentTransform.Translate(moveDirection * (moveSpeed * Time.deltaTime));
             
             var distance = Mathf.Abs(Vector3.Distance(_parentTransform.position, _origin));
@@ -29,6 +46,7 @@ namespace Runtime.Platforms
             
             moveDirection *= -1f;
             _origin = _parentTransform.position;
+            _isInDelay = true;
         }
 
         public void AttachPlayer(Collider player)

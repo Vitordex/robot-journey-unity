@@ -228,6 +228,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: move_no_rotate
       objectReference: {fileID: 0}
+    - target: {fileID: 7932404914468571794, guid: b2809ec0a9448364f85ddcc971792bc3,
+        type: 3}
+      propertyPath: m_TagString
+      value: Platform
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b2809ec0a9448364f85ddcc971792bc3, type: 3}
 --- !u!4 &6959089839336044911 stripped
