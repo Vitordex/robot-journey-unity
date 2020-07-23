@@ -519,6 +519,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9110242571899014559}
   - component: {fileID: 9110242571899014556}
+  - component: {fileID: 1740350553014180914}
   - component: {fileID: 9110242571899014558}
   - component: {fileID: 673636437549478283}
   m_Layer: 0
@@ -563,9 +564,24 @@ MonoBehaviour:
   turned:
     m_PersistentCalls:
       m_Calls: []
+  onChangeEnergized:
+    m_PersistentCalls:
+      m_Calls: []
   isEnergized: 0
   canTurn: 1
   platformType: 
+--- !u!114 &1740350553014180914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9110242571899014557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d23bed87ab30b94ba25d7ce7b949287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &9110242571899014558
 MonoBehaviour:
   m_ObjectHideFlags: 0

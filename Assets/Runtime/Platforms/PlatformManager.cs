@@ -7,12 +7,14 @@ namespace Runtime.Platforms
     public class PlatformManager : MonoBehaviour
     {
         public UnityEvent turned;
+        public BoolEvent changeEnergizedEvent;
 
         private IRotator _platformRotator;
-        public bool isEnergized = false;
+        [SerializeField] private bool isEnergized = false;
         public bool canTurn;
 
         [HideInInspector] public string platformType;
+        public bool IsEnergized => isEnergized;
 
         private void Awake()
         {
@@ -29,12 +31,13 @@ namespace Runtime.Platforms
             if (_platformRotator.IsTurning() || !canTurn || !isEnergized) return;
 
             _platformRotator.TurnAround();
-            turned.Invoke();
+            turned.Invoke();            
         }
 
         public void ToggleEnergy()
         {
             isEnergized = !isEnergized;
+            changeEnergizedEvent.Invoke(isEnergized);
         }
     }
 }
