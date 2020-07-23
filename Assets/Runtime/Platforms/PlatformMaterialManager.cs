@@ -2,7 +2,7 @@
 
 namespace Runtime.Platforms
 {
-    public class PlatformMaterial : MonoBehaviour
+    public class PlatformMaterialManager : MonoBehaviour
     {
         private Material[] materials;
 
@@ -15,8 +15,8 @@ namespace Runtime.Platforms
             for (int i = 0; i < renderes.Length; i++)
                 materials[i] = renderes[i].material;
 
-            platformManager.onChangeEnergized
-                .AddListener(()=> Energized(platformManager.IsEnergized));
+            platformManager.changeEnergizedEvent
+                .AddListener(Energized);
 
             Energized(platformManager.IsEnergized);
         }
